@@ -1,0 +1,431 @@
+.keyDown {
+  background: #d0d0d0;
+}
+
+.keyboardTransition-enter-active,
+.keyboardTransition-leave-active {
+  max-height: 500px;
+}
+
+.keyboardTransition-enter,
+.keyboardTransition-leave-to {
+  max-height: 0px;
+}
+
+.disabled_key {
+  background: #f2f2f2 !important;
+  cursor: default !important;
+  color: #aaaaaa;
+  border-color: rgba(118, 118, 118, 0.3);
+}
+
+i {
+  font-style: normal;
+}
+
+.num-del > svg {
+  margin-top: 0px;
+}
+
+.def-del > svg {
+  margin-top: 0px;
+}
+
+.hand-del > svg {
+  margin-top: 0px;
+}
+
+.my-keyboard {
+  position: fixed;
+  left: 0px;
+  z-index: 10;
+  bottom: 0px;
+  width: 100%;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.my-keyboard .pinyin > div,
+.my-keyboard .select-list > div {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.my-keyboard .pinyin .item_main,
+.my-keyboard .select-list .item_main {
+  width: 86%;
+}
+
+.my-keyboard .pinyin {
+  background: #fff;
+  border: 1px solid #d1d1d1;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.my-keyboard .pinyin > div span {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.my-keyboard .select-list {
+  background: #fff;
+  border: 1px solid #d1d1d1;
+  border-top: none;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.my-keyboard .select-list > div {
+  position: relative;
+}
+
+.my-keyboard .select-list .select-text {
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.my-keyboard .select-list .select-text + .select-text {
+  margin-left: 15px;
+}
+
+.my-keyboard .select-list .page {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 120px;
+  height: 40px;
+}
+
+.my-keyboard .select-list .page .next {
+  transform: scaleX(2) rotate(180deg);
+}
+
+.my-keyboard .select-list .page > p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: inline-block;
+  text-align: center;
+  transform: scaleX(2);
+  width: 30px;
+  height: 38px;
+  line-height: 38px;
+  background: #344a5d;
+  color: #fff;
+  border: 1px solid #d7d7d7;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.my-keyboard .select-list .page > p:active {
+  background: #fff;
+  color: #344a5d;
+}
+
+.my-keyboard .select-list .page > p + p {
+  margin-left: 30px;
+}
+
+.my-keyboard .main-keyboard {
+  padding: 15px 14px;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 305px;
+}
+
+.my-keyboard .main-keyboard .key {
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
+  font-weight: 700;
+  width: 100px;
+  background: #fff;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 8px;
+  margin-top: 8px;
+  box-shadow: 1px 1px 2px rgba(20, 20, 20, 0.3);
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.my-keyboard .main-keyboard .key:active {
+  background: #d0d0d0;
+}
+
+.my-keyboard .main-keyboard .number-box {
+  width: 720px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.my-keyboard .main-keyboard .number {
+  width: 210px;
+  height: 65px;
+  font-size: 46px;
+  line-height: 65px;
+}
+
+.my-keyboard .main-keyboard .del-box {
+  width: 260px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.my-keyboard .main-keyboard .del-box .key {
+  margin-left: 0px;
+}
+
+.my-keyboard .main-keyboard .hand-left-box {
+  width: 155px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.my-keyboard .main-keyboard .hand-left-box .key {
+  margin-left: 0px;
+}
+
+.my-keyboard .main-keyboard .hand-left-box .key:nth-of-type(1) {
+  margin-top: 0px;
+}
+
+.my-keyboard .main-keyboard .hand-left-box > span {
+  width: 140px;
+}
+
+.my-keyboard .main-keyboard .cap_change {
+  width: 140px;
+  color: #fff;
+  background: #344a5d;
+}
+
+.my-keyboard .main-keyboard .key_hide {
+  background: #d6d1d0;
+}
+
+.my-keyboard .main-keyboard .key_hide > .jp {
+  height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.my-keyboard .main-keyboard .key_hide > span {
+  padding-left: 10px;
+  font-size: 18px;
+  line-height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.my-keyboard .main-keyboard .blue {
+  width: 180px;
+}
+
+.my-keyboard .main-keyboard .blue .blue_default {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.my-keyboard .main-keyboard .red {
+  color: #fff;
+  background: #f56c6c;
+}
+
+.my-keyboard .main-keyboard .red:active {
+  background: #f89e9e;
+}
+
+.my-keyboard .main-keyboard .space {
+  width: 367px;
+}
+
+.no_del_box .num .number:nth-last-child(2) {
+  width: 430px;
+}
+
+.pc {
+  min-width: 1100px;
+}
+
+.pc .def-del {
+  width: 140px !important;
+}
+
+.pc .no_del_box {
+  height: 333px !important;
+}
+
+.pc .hide12key {
+  height: 30px;
+}
+
+.phone .hide12key {
+  height: 25px;
+}
+
+.phone .hide12key svg {
+  width: 30px;
+  height: 30px;
+}
+
+.phone .select-list {
+  white-space: nowrap;
+}
+
+.phone .select-list .item_main {
+  overflow: auto;
+  width: 91%;
+}
+
+.phone .select-list .item_main .select-text {
+  font-size: 19px;
+}
+
+.phone .select-list .page {
+  right: 17px;
+  text-align: right;
+  width: 0px;
+  height: 0px;
+}
+
+.phone .select-list .page .next {
+  width: 23px;
+  height: 38px;
+}
+
+.phone .no_del_box {
+  height: 253px !important;
+}
+
+.phone .main-keyboard {
+  padding: 0px;
+  height: 235px;
+  margin-left: -8px;
+}
+
+.phone .main-keyboard .select_cn {
+  overflow: auto;
+  width: 71% !important;
+  height: 94%;
+  background: #fff;
+  margin-top: 7px;
+  border-radius: 10px;
+}
+
+.phone .main-keyboard .select_cn .select_cn_main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.phone .main-keyboard .select_cn .select_cn_main .item {
+  height: 20px;
+  padding: 10px;
+  border-bottom: 1px solid;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.phone .main-keyboard .number-box {
+  width: 75%;
+}
+
+.phone .main-keyboard .number-box .number {
+  font-size: 26px;
+  width: 29%;
+  height: 45px;
+}
+
+.phone .main-keyboard .del-box {
+  width: 25%;
+}
+
+.phone .main-keyboard .del-box span {
+  width: 80%;
+}
+
+.phone .main-keyboard .del-box .number {
+  font-size: 20px;
+}
+
+.phone .main-keyboard .del-box .key_hide {
+  width: 80% !important;
+}
+
+.phone .main-keyboard .del-box .key_hide span {
+  margin-bottom: 2px;
+  padding-left: 0px;
+  font-size: 15px;
+}
+
+.phone .main-keyboard .del-box .num-del svg {
+  width: 48%;
+  height: 9%;
+  margin-top: -26px;
+  position: relative;
+  top: 13px;
+}
+
+.phone .main-keyboard .del-box .blue {
+  font-size: 26px !important;
+}
+
+.phone .main-keyboard .key {
+  width: 8%;
+  height: 18%;
+  margin-left: 6px !important;
+  line-height: 45px;
+}
+
+.phone .main-keyboard .letter {
+  font-size: 24px;
+}
+
+.phone .main-keyboard .blue {
+  width: 12%;
+  font-size: 15px;
+}
+
+.phone .main-keyboard .blue .blue_default {
+  font-size: 12px;
+}
+
+.phone .main-keyboard ::v-deep .num-del {
+  height: 45px;
+}
+
+.phone .main-keyboard ::v-deep .num-del svg {
+  height: 38px;
+  margin-left: -3px;
+  position: relative;
+  top: 5px;
+}
+
+.phone .main-keyboard ::v-deep .def-del {
+  width: 12% !important;
+}
+
+.phone .main-keyboard ::v-deep .def-del svg {
+  margin-top: 6px;
+  height: 31px;
+  margin-left: -3px;
+}
+
+.phone .main-keyboard .key_hide {
+  width: 20% !important;
+}
+
+.phone .main-keyboard .key_hide span {
+  padding-left: 0px;
+  font-size: 15px;
+}
+
+.phone .main-keyboard .space {
+  width: 30%;
+  font-size: 20px;
+}
