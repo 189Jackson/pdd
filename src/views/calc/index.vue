@@ -26,7 +26,7 @@
           <label>运费合计：</label>
           <span>￥{{totalFreight}} ）</span>
         </section>
-        <button type="primary" @click="exportExcel">导出excel</button>
+        <el-button type="primary" @click="exportExcel">导出excel</el-button>
       </div>
     </div>
     <div class="money__input">
@@ -170,7 +170,7 @@ const totalFreight = ref()  // 运费总数
 const boss = ref('1');
 const bossList = ref([
   {
-    label: "娄底",
+    label: "计算基数",
     value: '1',
     print: 9.5,
     page: 4,
@@ -227,19 +227,35 @@ const handleMoney = () => {
   let totalFreight1 = 0
   let totalFreightNumber1 = 0
   const copyTableED = []
-  copyTableData.forEach((item) => {
+  copyTableData.forEach((item, inx) => {
     const areaMoney = (item.width/100) * (item.height/100) * print.value  // 打印费
-    let pageMoneyMath = Math.min(item.width, item.height) / 100 * page.value; // 纸筒费
+    const minWidth = Math.min(item.width, item.height); // 找到最小边长度
     const isSister = copyTableED.some(itt => itt.kid == item.kid)
+
+    const maxWidthArr = [minWidth]
+    for (let index = inx+1; index < copyTableData.length; index++) {
+      if (copyTableData[index].kid == item.kid) {
+        const minWidth2 = Math.min(copyTableData[index].width, copyTableData[index].height);
+        maxWidthArr.push(minWidth2)
+      }
+    }
+    const maxWidth = Math.max(...maxWidthArr)
+
+    // let pageMoneyMath = Math.min(item.width, item.height) / 100 * page.value; // 纸筒费
+    let pageMoneyMath = maxWidth / 100 * page.value; // 纸筒费
     const freightMoney = isSister ? 0 : freight.value; // 运费
     const costMoney = isSister ? 0 : cost.value; // 打包费
     const pageMoney = isSister ? 0 : pageMoneyMath; // 纸筒费
     item.isOne = isSister ? 0 : 1; // 运费个数
-    const itemTotal = areaMoney + pageMoney + parseFloat(freightMoney) + parseFloat(costMoney);
-    item.total = parseFloat(itemTotal).toFixed(5);
+    item.minWidth = minWidth;
+    
     item.pageMoney = pageMoney.toFixed(5); // 纸筒费
     item.freightMoney = freightMoney.toFixed(5); // 运费
     item.areaMoney = areaMoney.toFixed(5); // 打印费
+
+    const itemTotal = areaMoney + pageMoney + parseFloat(freightMoney) + parseFloat(costMoney);
+    item.total = parseFloat(itemTotal).toFixed(5);
+
     copyTableED.push(item)
     total += itemTotal
     totalFreightNumber1 += parseFloat(item.isOne)
