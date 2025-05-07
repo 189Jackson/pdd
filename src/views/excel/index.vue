@@ -1,13 +1,11 @@
 <template>
   <div class="excel-view">
-    <ExcelUploader2 />
+    1
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import ExcelUploader2 from './components/ExcelUploader0.vue';
-// import ExcelUploader2 from '@/components/ExcelUploader.vue';
 
 const type = ref(1);
 </script>

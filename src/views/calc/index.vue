@@ -416,11 +416,11 @@ const exportExcel = () => {
 
 <style lang="scss">
 .money {
+  padding: 15px;
   &__top {
     display: flex;
     align-items: center;
   }
-  padding: 15px;
   &__input {
     margin: 0 12px 12px 0;
     display: flex;
