@@ -89,7 +89,7 @@
     <!-- 表格组件 -->
     <el-table
       :data="tableData"
-      style="width: 100%; height: calc(100vh - 130px)"
+      style="width: 100%; height: calc(100vh - 230px);"
       border
       size="small"
     >
