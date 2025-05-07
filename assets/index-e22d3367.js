@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-c27b6911.js";import{a as _,o as s,f as t}from"./index-ae2718cb.js";const o={class:"excel-view"},a={__name:"index",setup(c){return _(1),(n,d)=>(s(),t("div",o," 1 "))}},i=e(a,[["__scopeId","data-v-d4a989de"]]);export{i as default};
