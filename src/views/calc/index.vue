@@ -7,7 +7,7 @@
         :before-upload="beforeUpload"
         :http-request="() => {}"
       >
-        <div>点击或者拖拽</div>
+        <div>点击或者拖拽excel</div>
       </el-upload>
       <div v-if="tableData?.length" style="margin-left: 12px">
         {{ tableData?.length }}条
