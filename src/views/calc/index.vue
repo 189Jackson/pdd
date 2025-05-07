@@ -416,7 +416,7 @@ const exportExcel = () => {
 
 <style lang="scss">
 .money {
-  padding: 15px;
+  padding: 14px;
   &__top {
     display: flex;
     align-items: center;
