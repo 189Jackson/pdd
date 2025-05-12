@@ -137,9 +137,19 @@
           <span style="color: red;">{{ scope.row.total }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="size" label="自定义金额" width="90px">
+        <template #default="scope">
+          <span>{{ scope.row.custom }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="name" label="合并订单" width="80">
         <template #default="scope">
           <span :class="scope.row.combine> 1 ? 'excel--combine': ''">{{scope.row.combine}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="size" label="数量" width="60px">
+        <template #default="scope">
+          <span :style="{'color': scope.row.num>1?'#00ff51': ''}">{{ scope.row.num }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="orderId" label="订单号" width="220" />
@@ -154,6 +164,7 @@ import JSZip from "jszip";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import _ from "lodash";
+import { ElMessage, ElMessageBox } from 'element-plus'
 const loading = ref(false);
 const tableColumnLabel = ref([]); // 获取表头内容
 const tableData = ref([]); // 表格数据
@@ -228,7 +239,7 @@ const handleMoney = () => {
   let totalFreightNumber1 = 0
   const copyTableED = []
   copyTableData.forEach((item, inx) => {
-    const areaMoney = (item.width/100) * (item.height/100) * print.value  // 打印费
+    const areaMoney = (item.width/100) * (item.height/100) * print.value * item.num  // 打印费
     const minWidth = Math.min(item.width, item.height); // 找到最小边长度
     const isSister = copyTableED.some(itt => itt.kid == item.kid)
 
@@ -241,20 +252,30 @@ const handleMoney = () => {
     }
     const maxWidth = Math.max(...maxWidthArr)
 
-    // let pageMoneyMath = Math.min(item.width, item.height) / 100 * page.value; // 纸筒费
-    let pageMoneyMath = maxWidth / 100 * page.value; // 纸筒费
-    const freightMoney = isSister ? 0 : freight.value; // 运费
-    const costMoney = isSister ? 0 : cost.value; // 打包费
-    const pageMoney = isSister ? 0 : pageMoneyMath; // 纸筒费
     item.isOne = isSister ? 0 : 1; // 运费个数
-    item.minWidth = minWidth;
-    
-    item.pageMoney = pageMoney.toFixed(5); // 纸筒费
-    item.freightMoney = freightMoney.toFixed(5); // 运费
-    item.areaMoney = areaMoney.toFixed(5); // 打印费
+    let itemTotal = 0
 
-    const itemTotal = areaMoney + pageMoney + parseFloat(freightMoney) + parseFloat(costMoney);
-    item.total = parseFloat(itemTotal).toFixed(5);
+    if (item.custom || item.noSize) { // 自定义金额优先级最高
+      itemTotal = parseFloat(item.custom)
+      if (!item.custom) {
+        ElMessageBox.alert('请输入自定义金额，亲!', '提示', {
+          confirmButtonText: 'OK',
+        })
+        return
+      }
+    } else {
+      let pageMoneyMath = maxWidth / 100 * page.value; // 纸筒费
+      const freightMoney = isSister ? 0 : freight.value; // 运费
+      const costMoney = isSister ? 0 : cost.value; // 打包费
+      const pageMoney = isSister ? 0 : pageMoneyMath; // 纸筒费
+      item.minWidth = minWidth;
+      
+      item.pageMoney = pageMoney.toFixed(5); // 纸筒费
+      item.freightMoney = freightMoney.toFixed(5); // 运费
+      item.areaMoney = areaMoney.toFixed(5); // 打印费
+      itemTotal = areaMoney + pageMoney + parseFloat(freightMoney) + parseFloat(costMoney);
+      item.total = parseFloat(itemTotal).toFixed(5);
+    }
 
     copyTableED.push(item)
     total += itemTotal
@@ -289,16 +310,18 @@ function formatDate(sheetlist) {
 }
 
 
-
-
 // 格式化商品规格
 const resetSize = () => {
   tableData.value.forEach((item, index) => {
     const size = extractDimension(item.specification);
     const [width, height] = size.split("x");
-    item.width = parseFloat(width.trim());
-    item.height = parseFloat(height.trim());
-    item.size = size.trim();
+    if (width) {
+      item.width = parseFloat(width.trim());
+      item.height = parseFloat(height.trim());
+      item.size = size.trim();
+    } else {
+      item.noSize = true // 来图定制,没有尺寸
+    }
   });
 };
 
@@ -338,7 +361,7 @@ const resetName = () => {
 
 // 匹配规格尺寸
 function extractDimension(str) {
-  const regex = /(\d+\.?\d*)(cm|厘米|米)?\s*[*x]\s*(\d+\.?\d*)(cm|厘米|米)?/i;
+  const regex = /(\d+\.?\d*)(cm|厘米|米)?\s*[*x-]\s*(\d+\.?\d*)(cm|厘米|米)?/i;
   const match = str.match(regex);
   if (!match) return "";
   // 解构匹配结果（注意索引位置）
