@@ -149,7 +149,7 @@
       </el-table-column>
       <el-table-column prop="size" label="数量" width="60px">
         <template #default="scope">
-          <span :style="{'color': scope.row.num>1?'#00ff51': ''}">{{ scope.row.num }}</span>
+          <span :class="scope.row.num> 1 ? 'excel--num': ''">{{ scope.row.num }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="orderId" label="订单号" width="220" />
@@ -237,6 +237,7 @@ const handleMoney = () => {
   let total = 0
   let totalFreight1 = 0
   let totalFreightNumber1 = 0
+  const fixedNum = 2 // 保留小数点位数
   const copyTableED = []
   copyTableData.forEach((item, inx) => {
     const areaMoney = (item.width/100) * (item.height/100) * print.value * item.num  // 打印费
@@ -256,7 +257,10 @@ const handleMoney = () => {
     let itemTotal = 0
 
     if (item.custom || item.noSize) { // 自定义金额优先级最高
+      const freightMoney = isSister ? 0 : freight.value;
       itemTotal = parseFloat(item.custom)
+      item.total = Number(parseFloat(itemTotal).toFixed(fixedNum));
+      item.freightMoney = Number(freightMoney.toFixed(fixedNum)); // 运费
       if (!item.custom) {
         ElMessageBox.alert('请输入自定义金额，亲!', '提示', {
           confirmButtonText: 'OK',
@@ -270,11 +274,12 @@ const handleMoney = () => {
       const pageMoney = isSister ? 0 : pageMoneyMath; // 纸筒费
       item.minWidth = minWidth;
       
-      item.pageMoney = pageMoney.toFixed(5); // 纸筒费
-      item.freightMoney = freightMoney.toFixed(5); // 运费
-      item.areaMoney = areaMoney.toFixed(5); // 打印费
-      itemTotal = areaMoney + pageMoney + parseFloat(freightMoney) + parseFloat(costMoney);
-      item.total = parseFloat(itemTotal).toFixed(5);
+      item.pageMoney = Number(pageMoney.toFixed(fixedNum)); // 纸筒费
+      item.freightMoney = Number(freightMoney.toFixed(fixedNum)); // 运费
+      item.areaMoney = Number(areaMoney.toFixed(fixedNum)); // 打印费
+      itemTotal = Number(areaMoney + pageMoney + parseFloat(freightMoney) + parseFloat(costMoney));
+      item.total = Number(parseFloat(itemTotal).toFixed(fixedNum));
+      // 统一转化一次，解决导出excel表格无法识别的问题
     }
 
     copyTableED.push(item)
@@ -285,7 +290,7 @@ const handleMoney = () => {
   totalFreightNumber.value = totalFreightNumber1
   totalFreight.value = totalFreight1;
   tableData.value = copyTableData
-  totalMoney.value = parseFloat(total).toFixed(5);
+  totalMoney.value = parseFloat(total).toFixed(fixedNum);
 };
 
 
@@ -474,6 +479,11 @@ const exportExcel = () => {
 .excel{
     &--combine{
       color: red;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    &--num{
+      color: #a412eb;
       font-size: 18px;
       font-weight: 700;
     }
